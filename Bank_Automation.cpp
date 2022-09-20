@@ -1,3 +1,12 @@
+/*
+MD. Mehedi Hasan Maruf
+Dept. of CSE , RUET
+2003037
+
+
+20/09/2022 8:20 PM
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,6 +17,7 @@ class Account {
     int age;
     string accountHolderName;
     double balance;
+    string admin_pass = "sudo";
  public:
     Account(int accountNumber, string accountHolderName, double balance, int age) {
         this->accountNumber = accountNumber;
@@ -65,6 +75,19 @@ class Account {
         cout << "\tAge: " << age << endl;
         cout << "\n\n############### ACCOUNT DETAILS ###############\n\n";
     }
+    bool security() {
+        cout << "Enter Admin Password: ";
+        string password;
+        int flag = 4;
+        while (cin >> password && flag > 0) {
+            system("clear");
+            cout << "Invalid Password (Press 'Q' to quite)\nTry Again : (remaining attempts : " << flag-1 << ")\n";
+            if (password == "Q" || password == "q") {flag = 0; break;}
+            else if (password == admin_pass) {flag = 1; break;}
+            else {flag--;}
+        }
+        return flag;
+    }
 };
 
 class Bank {
@@ -78,16 +101,7 @@ class Bank {
     }
     void addAccount(Account *account) {
         system("clear");
-        cout << "Enter Admin Password: ";
-        string password;
-        int flag = 4;
-        while (cin >> password && flag > 0) {
-            system("clear");
-            cout << "Invalid Password (Press 'Q' to quite)\nTry Again : (remaining attempts : " << flag-1 << ")\n";
-            if (password == "Q" || password == "q") {return;}
-            else if (password == admin_pass) {flag = 3; break;}
-            else {flag--;}
-        }
+        bool flag = account->security();
         if (flag == 0) {
             system("clear");
             cout << "Too many attempts !\n";
@@ -168,14 +182,7 @@ class Bank {
         cout << "Enter Admin Password: ";
         string password;
         bool flag{false};
-        int fg{4};
-        while (cin >> password && fg > 0) {
-            system("clear");
-            cout << "Invalid Password (Press 'Q' to quite)\nTry Again : (remaining attempts : " << fg-1 << ")\n";
-            if (password == "Q" || password == "q") {fg = 3; return;}
-            else if (password == admin_pass) {fg = 3; break;}
-            else {fg--;}
-        }
+        bool fg = accounts[accountNumber]->security();
         if (fg == 0) {
             system("clear");
             cout << "Too many attempts !\n";
