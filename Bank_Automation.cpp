@@ -92,7 +92,7 @@ class Account {
 
 class Bank {
  private:
-    Account *accounts[10];
+    Account *accounts[100];
     int accountCount;
     string admin_pass = "sudo";
  public:
@@ -179,24 +179,30 @@ class Bank {
     }
     void deleteAccount(int accountNumber) {
         system("clear");
-        cout << "Enter Admin Password: ";
         string password;
         bool flag{false};
-        bool fg = accounts[accountNumber]->security();
-        if (fg == 0) {
-            system("clear");
-            cout << "Too many attempts !\n";
-            cout << "Tries : " << fg << endl;
-            return;
-        }
         for (int i = 0; i < accountCount; i++) {
             if (accounts[i]->getAccountNumber() == accountNumber && accounts[i]->getBalance() != 0) {
+                bool fg = accounts[i]->security();
+                if (fg == 0) {
+                    system("clear");
+                    cout << "Too many attempts !\n";
+                    cout << "Tries : " << fg << endl;
+                    return;
+                }
                 system("clear");
                 cout << "\n\n##########################################################\n" << endl;
                 cout << "\tSorry ! Can't Delete an account with balance !" << endl;
                 cout << "\n\n##########################################################\n\n" << endl;
                 return;
             } else if (accounts[i]->getAccountNumber() == accountNumber) {
+                bool fg = accounts[i]->security();
+                if (fg == 0) {
+                    system("clear");
+                    cout << "Too many attempts !\n";
+                    cout << "Tries : " << fg << endl;
+                    return;
+                }
                 accounts[i] = accounts[accountCount - 1];
                 accountCount--;
                 flag = true;
