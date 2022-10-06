@@ -8,6 +8,7 @@ Dept. of CSE , RUET
 */
 
 #include<bits/stdc++.h>
+#include <conio.h>
 using namespace std;
 
 
@@ -55,13 +56,13 @@ class Account {
     void withdraw(double amount) {
         if (balance >= amount) {
             balance -= amount;
-            system("clear");
+            system("cls");
             cout << "\n\n#################################################################################\n" << endl;
             cout << "\tSuccessfully withdrew : " << amount << " TK" << endl;
             cout << "\tCurrent Balance is : " << balance << " TK" << endl;
             cout << "\n\n#################################################################################\n\n" << endl;
         } else {
-            system("clear");
+            system("cls");
             cout << "\n\n##########################################################\n" << endl;
             cout << "\tInsufficient Balance !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
@@ -77,10 +78,29 @@ class Account {
     }
     bool security() {
         cout << "Enter Admin Password: ";
-        string password;
+        char password[32];
         int flag = 4;
-        while (cin >> password && flag > 0) {
-            system("clear");
+        while (flag > 0) {
+            int i = 0;
+            char a;
+            for (i = 0;;) {
+                a = getch();
+                // Only alphabets and numbers
+                if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z') || (a >= '0' && a <= '9')) {
+                    password[i] = a;
+                    ++i;
+                    cout << "*";
+                }
+                if (a == '\b' && i >= 1) {
+                    cout << "\b \b";  //  rub the character behind the cursor.
+                    --i;
+                }
+                if (a == '\r') {
+                    password[i]='\0';
+                    break;
+                }
+            }
+            system("cls");
             cout << "Invalid Password (Press 'Q' to quite)\nTry Again : (remaining attempts : " << flag-1 << ")\n";
             if (password == "Q" || password == "q") {flag = 0; break;}
             else if (password == admin_pass) {flag = 1; break;}
@@ -93,6 +113,7 @@ class Account {
 class Bank {
  private:
     Account *accounts[100];
+    int created[100000];
     int accountCount;
     string admin_pass = "sudo";
  public:
@@ -100,16 +121,23 @@ class Bank {
         accountCount = 0;
     }
     void addAccount(Account *account) {
-        system("clear");
+        system("cls");
+        if (created[account->getAccountNumber()] == 1) {
+            cout << "\n\n##########################################################\n" << endl;
+            cout << "\tAccount Already Exists of number: " << account->getAccountNumber() << endl;
+            cout << "\n\n##########################################################\n\n" << endl;
+            return;
+        }
         bool flag = account->security();
         if (flag == 0) {
-            system("clear");
+            system("cls");
             cout << "Too many attempts !\n";
             cout << "Tries : " << flag << endl;
             return;
         } else {
-            system("clear");
+            system("cls");
             accounts[accountCount++] = account;
+            created[account->getAccountNumber()] = 1;
             cout << "\n\n##########################################################\n" << endl;
             cout << "\tYour account has been created successfully !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
@@ -136,7 +164,7 @@ class Bank {
             }
         }
         if (!flag) {
-            system("clear");
+            system("cls");
             cout << "\n\n##########################################################\n" << endl;
             cout << "\t\tAccount no : " << accountNumber << " not found !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
@@ -151,12 +179,12 @@ class Bank {
             }
         }
         if (fg) {
-            system("clear");
+            system("cls");
             cout << "\n\n##########################################################\n" << endl;
             cout << "\t\tAccount no : " << accountNumber << " not found !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
         } else {
-            system("clear");
+            system("cls");
             cout << "\n\n######################################################################################################\n" << endl;
             cout << "\t\tAccount no : " << accountNumber << " was successfully credited with : " << amount << " TK" << endl;
             cout << "\n\n#######################################################################################################\n\n" << endl;
@@ -171,26 +199,26 @@ class Bank {
             }
         }
         if (fg) {
-            system("clear");
+            system("cls");
             cout << "\n\n##########################################################\n" << endl;
             cout << "\t\tAccount no : " << accountNumber << " not found !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
         }
     }
     void deleteAccount(int accountNumber) {
-        system("clear");
+        system("cls");
         string password;
         bool flag{false};
         for (int i = 0; i < accountCount; i++) {
             if (accounts[i]->getAccountNumber() == accountNumber && accounts[i]->getBalance() != 0) {
                 bool fg = accounts[i]->security();
                 if (fg == 0) {
-                    system("clear");
+                    system("cls");
                     cout << "Too many attempts !\n";
                     cout << "Tries : " << fg << endl;
                     return;
                 }
-                system("clear");
+                system("cls");
                 cout << "\n\n##########################################################\n" << endl;
                 cout << "\tSorry ! Can't Delete an account with balance !" << endl;
                 cout << "\n\n##########################################################\n\n" << endl;
@@ -198,16 +226,17 @@ class Bank {
             } else if (accounts[i]->getAccountNumber() == accountNumber) {
                 bool fg = accounts[i]->security();
                 if (fg == 0) {
-                    system("clear");
+                    system("cls");
                     cout << "Too many attempts !\n";
                     cout << "Tries : " << fg << endl;
                     return;
                 }
                 accounts[i] = accounts[accountCount - 1];
                 accountCount--;
+                created[accountNumber] = 0;
                 flag = true;
                 if (accounts[i]->getAccountNumber() == accountNumber && accounts[i]->getBalance() != 0) {
-                    system("clear");
+                    system("cls");
                     cout << "\n\n##########################################################\n" << endl;
                     cout << "\tSuccessfully Deleted account !" << endl;
                     cout << "\n\n##########################################################\n\n" << endl;
@@ -221,7 +250,7 @@ class Bank {
 
         } else {
             cin.ignore();
-            system("clear");
+            system("cls");
             cout << "\n\n##########################################################\n" << endl;
             cout << "\t\tAccount no : " << accountNumber << " not found !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
@@ -232,7 +261,7 @@ class Bank {
 int main() {
     Bank bank;
     int choice = 0;
-    system("clear");
+    system("cls");
     while (true) {
         cout << "\n***************** MAIN MENU *****************" << endl;
         cout << "1. Add Account" << endl;
@@ -245,7 +274,7 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
         if (choice == 1) {
-            system("clear");
+            system("cls");
             int accountNumber;
             string accountHolderName;
             double balance;
@@ -262,24 +291,24 @@ int main() {
             bank.addAccount(account);
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 2) {
-            system("clear");
+            system("cls");
             bank.displayAll();
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 3) {
-            system("clear");
+            system("cls");
             int accountNumber;
             cout << "Enter Account Number: ";
             cin >> accountNumber;
             bank.displayAccount(accountNumber);
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 4) {
-            system("clear");
+            system("cls");
             int accountNumber;
             double amount;
             cout << "Enter Account Number: ";
@@ -289,9 +318,9 @@ int main() {
             bank.deposit(accountNumber, amount);
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 5) {
-            system("clear");
+            system("cls");
             int accountNumber;
             double amount;
             cout << "Enter Account Number: ";
@@ -299,26 +328,26 @@ int main() {
             cout << "Enter Amount: ";
             cin >> amount;
             bank.withdraw(accountNumber, amount);
-            // system("clear");
+            // system("cls");
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 6) {
-            system("clear");
+            system("cls");
             int accountNumber;
             cout << "Enter Account Number: ";
             cin >> accountNumber;
             bank.deleteAccount(accountNumber);
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
         } else if (choice == 7) {
             cout << "\n\n##########################################################\n" << endl;
             cout << "\t\t\tThank You !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
             break;
         }  else {
             cout << "\n\n##########################################################\n" << flush;
@@ -326,7 +355,7 @@ int main() {
             cout << "\n\n##########################################################\n\n" << flush;
             cin.ignore();
             cin.ignore();
-            system("clear");
+            system("cls");
             continue;
         }
     }
