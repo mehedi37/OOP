@@ -56,8 +56,12 @@ class Search {
         cout << "Element not found\n";
     }
     void binary_search(int elm) {
+        // for (auto v : array) {
+        //     cout << v.first << " " << v.second << '\n';
+        // }
+        cout << endl;
         int l{0}, r{size-1};
-        while (l < r) {
+        while (l <= r) {
             int mid = l+(r-l)/2;
             if (array[mid].first == elm) {
                 cout << "Found: " << elm << " at: " << array[mid].second + 1 << endl;
@@ -83,10 +87,12 @@ class Search {
 
 
 int main() {
+    system("cls");
     int dimension;
     cout << "Enter Dimension of the matrix: ";
     cin >> dimension;
     int r, c;
+    system("cls");
     if (dimension == 1) {
         cout << "Enter Size of array : ";
         cin >> c;
@@ -109,3 +115,13 @@ int main() {
     }
     return 0;
 }
+
+
+/*
+bug in binary :
+8 9 100 12 15
+
+sol^n :        +-------------------+
+while (l <= r) | not while (l < r) |
+               +-------------------+
+*/
