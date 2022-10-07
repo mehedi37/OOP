@@ -2,6 +2,5 @@
 <img src = "img/image_2022-10-07_11-46-22.png" width = "700" height = "400" title = "Array_Of_Vector">
 
 <p><h1># Search Methods</h1></p></br>
-<!--<img src = "img/image_2022-10-07_12-41-17.png" width = "1200" height = "780" title = "Search"> -->
-
-<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVPPv71Nc=/?moveToViewport=-153,-688,1504,1214&embedId=478541970634" frameborder="0" scrolling="no" allowfullscreen></iframe>
+<img src = "img/image_2022-10-07_12-41-17.png" width = "1200" height = "780" title = "Search"> 
+<p><h3>Miro board <a href="https://miro.com/app/board/uXjVPPv71Nc=/?share_link_id=787733054321"> LINK </a></h3></p>
