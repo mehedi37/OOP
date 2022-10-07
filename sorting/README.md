@@ -8,4 +8,4 @@
 <img src = "img/sparse_table.png" width = "1000" height = "780" title = "Search"> 
 
 <p><h1># Sparse Table Creating Flow Chart</h1></p></br>
-<img src = "img/sparse_flow.png" width = "800" height = "1000" title = "Search"> 
+<img src = "img/sparse_flow_chart.png" width = "800" height = "1000" title = "Search"> 
