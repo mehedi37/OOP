@@ -4,4 +4,4 @@
 <p><h1># Search Methods</h1></p></br>
 <!--<img src = "img/image_2022-10-07_12-41-17.png" width = "1200" height = "780" title = "Search"> -->
 
-<img width="768" height="432" src="https://miro.com/app/live-embed/uXjVPPv71Nc=/?moveToViewport=-153,-688,1504,1214&embedId=633560076760" scrolling="no">
+<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVPPv71Nc=/?moveToViewport=-153,-688,1504,1214&embedId=478541970634" frameborder="0" scrolling="no" allowfullscreen></iframe>
