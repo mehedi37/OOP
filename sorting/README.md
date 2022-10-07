@@ -3,4 +3,4 @@
 
 <p><h1># Search Methods</h1></p></br>
 <img src = "img/image_2022-10-07_12-41-17.png" width = "1200" height = "780" title = "Search"> 
-<p><h3>Miro board <a href="https://miro.com/app/board/uXjVPPv71Nc=/?share_link_id=787733054321"> LINK </a></h3></p>
+<p><h3><i>Miro board <a href="https://miro.com/app/board/uXjVPPv71Nc=/?share_link_id=787733054321" target = "_blank"> LINK </a></i></h3></p>
