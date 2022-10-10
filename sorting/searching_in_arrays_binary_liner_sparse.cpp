@@ -162,9 +162,27 @@ int main() {
             cout << "Enter matrix Row x Column : ";
             cin >> r >> c;
             Search twoD(stoi(r), stoi(c));
-            // cout << "Enter number to find: ";
-            // int f; cin >> f;
-            twoD.sparseShow();
+            while (1) {
+                system("cls");
+                cout << "1) Find a number\n2) Show the sparse table\n";
+                string f; cin >> f;
+                if (f == "q") break;
+                else if (f == "1") {
+                    int tmp;
+                    cout << "\nEnter a number to find\n\n";
+                    cin >> tmp;
+                    twoD.sparse_find(tmp);
+                } else if (f == "2") {
+                    twoD.sparseShow();
+                } else if (f == "3") {
+                    break;
+                } else {
+                    cout << "Invalid Choice\n";
+                }
+                cin.ignore();
+                cout << "(Press Enter)\n";
+                cin.ignore();
+            }
         } else {
             system("cls");
             cout << "Invalid selection !" << endl;
