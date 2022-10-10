@@ -17,6 +17,7 @@ class Search {
     int sparse[100][100];
     int sTable[100][3];
     int size;
+
  public:
     Search(int column) {
         size = column;
@@ -55,6 +56,14 @@ class Search {
         }
         cout << "Element not found\n";
     }
+    void show1DArray(bool one = 1, bool two = 1) {
+        for (auto v : array) {
+            if (one && two) cout << v.first << " " << v.second << '\n';
+            else if (two) cout << v.second << ' ';
+            else if (one) cout << v.first << ' ';
+        }
+        cout << endl;
+    }
     void binary_search(int elm) {
         // for (auto v : array) {
         //     cout << v.first << " " << v.second << '\n';
@@ -74,16 +83,17 @@ class Search {
         }
         cout << "Element not found in array !\n";
     }
-    void sparse_table(int elm) {
+    void sparse_find(int elm) {
         for (int i{1}; i <= sTable[0][2]; i++) {
             if (sTable[i][2] == elm) {
-                cout << "Found: " << elm << " at\nRow: " << sTable[i][0] << "\nColumn: " << sTable[i][1] << endl;
+                cout << "Found: " << elm << " at\nRow: " << sTable[i][0]+1 << "\nColumn: " << sTable[i][1]+1 << endl;
                 return;
             }
         }
         cout << "Not found\n";
     }
     void sparseShow() {
+        cout << "\n+---+---+---+\n";
         cout << "|ROW|COL|VAL|";
         cout << "\n+---+---+---+\n";
         for (int i{0}; i <= sTable[0][2]; i++) {
@@ -106,42 +116,59 @@ class Search {
 
 
 int main() {
-    system("cls");
-    int dimension;
-    cout << "Enter Dimension of the matrix: ";
-    cin >> dimension;
-    int r, c;
-    system("cls");
-    if (dimension == 1) {
-        cout << "Enter Size of array : ";
-        cin >> c;
-        Search oneD(c);
-        cout << "Enter number to find: ";
-        int f; cin >> f;
-        cout << "\nResult using Liner search\n";
-        oneD.liner(f);
-        cout << "\nResult using Binary search\n";
-        oneD.binary_search(f);
-    } else if (dimension == 2) {
-        cout << "Enter matrix Row x Column : ";
-        cin >> r >> c;
-        Search twoD(r, c);
-        // cout << "Enter number to find: ";
-        // int f; cin >> f;
-        cout << "\n##########################\n";
-        twoD.sparseShow();
-    } else {
-        cout << "Invalid selection !" << endl;
+    while (1) {
+        system("cls");
+        string dimension;
+        cout << "\tHome menu\nEnter Dimension of the matrix: ";
+        cin >> dimension;
+        if (dimension[0] == 'q') {
+            system("cls");
+            cout << "\tQuitting Programme\n\tPress 1 to back\n";
+            string tp; cin >> tp;
+            if (tp == "1") continue;
+            else if (tp == "q") break;
+            else cout << "Invalid Choice\n";
+        }
+        string r, c;
+        system("cls");
+        if (dimension == "1") {
+            while (1) {
+                cout << "Enter Size of array for 1D : ";
+                cin >> c;
+                if (c == "q") break;
+                Search oneD(c[0]-'0');
+                while (1) {
+                    system("cls");
+                    oneD.show1DArray(1, 0);
+                    cout << "Searching ways available\n";
+                    cout << "1) Liner Search\n2) Binary Search\n3) Edit array\n";
+                    // int ch; cin >> ch;
+                    cout << "Enter number to find: ";
+                    string f; cin >> f;
+                    if (f == "q" || f == "3") {
+                        system("cls");
+                        break;
+                    }
+                    system("cls");
+                    if (f == "1") cout << "\nResult using Liner search\n", oneD.liner(stoi(f)), cout << "\n\n(Press Enter)\n";
+                    else if (f == "2") cout << "\nResult using Binary search\n", oneD.binary_search(stoi(f)), cout << "\n\n(Press Enter)\n";
+                    else cout << "Invalid Choice\n";
+                    cin.ignore();
+                    cin.ignore();
+                    system("cls");
+                }
+            }
+        } else if (dimension == "2") {
+            cout << "Enter matrix Row x Column : ";
+            cin >> r >> c;
+            Search twoD(stoi(r), stoi(c));
+            // cout << "Enter number to find: ";
+            // int f; cin >> f;
+            twoD.sparseShow();
+        } else {
+            system("cls");
+            cout << "Invalid selection !" << endl;
+        }
     }
     return 0;
 }
-
-
-/*
-bug in binary :
-8 9 100 12 15
-
-sol^n :        +-------------------+
-while (l <= r) | not while (l < r) |
-               +-------------------+
-*/
