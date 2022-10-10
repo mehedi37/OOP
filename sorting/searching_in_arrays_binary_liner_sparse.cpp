@@ -83,7 +83,26 @@ class Search {
         }
         cout << "Not found\n";
     }
+    void sparseShow() {
+        cout << "|ROW|COL|VAL|";
+        cout << "\n+---+---+---+\n";
+        for (int i{0}; i <= sTable[0][2]; i++) {
+            cout << "| ";
+            for (int j{0}; j < 3; j++) {
+                cout << sTable[i][j] << " | ";
+            }
+            if (!i) cout << "\n+-----------+";
+            if (i != sTable[0][2]) cout << "\n";
+        }
+        cout << "\n+---+---+---+\n";
+    }
 };
+
+/*
+4 5 6
+1 5 6
+2 3 8
+*/
 
 
 int main() {
@@ -107,9 +126,10 @@ int main() {
         cout << "Enter matrix Row x Column : ";
         cin >> r >> c;
         Search twoD(r, c);
-        cout << "Enter number to find: ";
-        int f; cin >> f;
-        twoD.sparse_table(f);
+        // cout << "Enter number to find: ";
+        // int f; cin >> f;
+        cout << "\n##########################\n";
+        twoD.sparseShow();
     } else {
         cout << "Invalid selection !" << endl;
     }
