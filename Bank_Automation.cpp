@@ -8,6 +8,7 @@ Dept. of CSE , RUET
 */
 
 #include<bits/stdc++.h>
+#include <conio.h>
 using namespace std;
 
 
@@ -77,9 +78,28 @@ class Account {
     }
     bool security() {
         cout << "Enter Admin Password: ";
-        string password;
+        char password[32];
         int flag = 4;
-        while (cin >> password && flag > 0) {
+        while (flag > 0) {
+            int i = 0;
+            char a;
+            for (i = 0;;) {
+                a = getch();
+                // Only alphabets and numbers
+                if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z') || (a >= '0' && a <= '9')) {
+                    password[i] = a;
+                    ++i;
+                    cout << "*";
+                }
+                if (a == '\b' && i >= 1) {
+                    cout << "\b \b";  //  rub the character behind the cursor.
+                    --i;
+                }
+                if (a == '\r') {
+                    password[i]='\0';
+                    break;
+                }
+            }
             system("cls");
             cout << "Invalid Password (Press 'Q' to quite)\nTry Again : (remaining attempts : " << flag-1 << ")\n";
             if (password == "Q" || password == "q") {flag = 0; break;}
@@ -93,6 +113,7 @@ class Account {
 class Bank {
  private:
     Account *accounts[100];
+    int created[100000];
     int accountCount;
     string admin_pass = "sudo";
  public:
@@ -101,6 +122,12 @@ class Bank {
     }
     void addAccount(Account *account) {
         system("cls");
+        if (created[account->getAccountNumber()] == 1) {
+            cout << "\n\n##########################################################\n" << endl;
+            cout << "\tAccount Already Exists of number: " << account->getAccountNumber() << endl;
+            cout << "\n\n##########################################################\n\n" << endl;
+            return;
+        }
         bool flag = account->security();
         if (flag == 0) {
             system("cls");
@@ -110,6 +137,7 @@ class Bank {
         } else {
             system("cls");
             accounts[accountCount++] = account;
+            created[account->getAccountNumber()] = 1;
             cout << "\n\n##########################################################\n" << endl;
             cout << "\tYour account has been created successfully !" << endl;
             cout << "\n\n##########################################################\n\n" << endl;
@@ -194,7 +222,7 @@ class Bank {
             cout << "Successfully Transferred " << amnt << " TK\n";
             cout << "From Acc : " << accounts[one]->getAccountNumber() << " to : " << accounts[two]->getAccountNumber() << endl;
         }
-}
+    }
     void deleteAccount(int accountNumber) {
         system("cls");
         string password;
@@ -213,7 +241,7 @@ class Bank {
                 cout << "\tSorry ! Can't Delete an account with balance !" << endl;
                 cout << "\n\n##########################################################\n\n" << endl;
                 return;
-            } else if (accounts[i]->getAccountNumber() == accountNumber && accounts[i]->getBalance() == 0) {
+            } else if (accounts[i]->getAccountNumber() == accountNumber) {
                 bool fg = accounts[i]->security();
                 if (fg == 0) {
                     system("cls");
@@ -223,7 +251,14 @@ class Bank {
                 }
                 accounts[i] = accounts[accountCount - 1];
                 accountCount--;
+                created[accountNumber] = 0;
                 flag = true;
+                if (accounts[i]->getAccountNumber() == accountNumber && accounts[i]->getBalance() != 0) {
+                    system("cls");
+                    cout << "\n\n##########################################################\n" << endl;
+                    cout << "\tSuccessfully Deleted account !" << endl;
+                    cout << "\n\n##########################################################\n\n" << endl;
+                }
             }
         }
         if (flag) {
@@ -246,7 +281,7 @@ int main() {
     int choice = 0;
     system("cls");
     while (true) {
-        cout << "\n***************** MAIN MENU *****************" << endl;
+         cout << "\n***************** MAIN MENU *****************" << endl;
         cout << "1. Add Account" << endl;
         cout << "2. Display All" << endl;
         cout << "3. Display Account" << endl;
