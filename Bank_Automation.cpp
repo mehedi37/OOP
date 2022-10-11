@@ -217,6 +217,10 @@ class Bank {
         if (cnt != 2) cout << "Invalid Account number\n";
         else {
             system("cls");
+            if (accounts[one]->getBalance() < amnt) {
+                cout << "Insufficient Balance\n";
+                return;
+            }
             accounts[one]->setBalance(accounts[one]->getBalance()-amnt);
             accounts[two]->setBalance(accounts[two]->getBalance()+amnt);
             cout << "Successfully Transferred " << amnt << " TK\n";
