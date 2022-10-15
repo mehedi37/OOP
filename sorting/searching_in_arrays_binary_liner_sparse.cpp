@@ -14,6 +14,7 @@ using namespace std;
 class Search {
  private:
     vector<pair<int, int>> array;
+    vector<int> merged;
     int sparse[100][100];
     int sTable[100][3];
     int size;
@@ -83,6 +84,22 @@ class Search {
         }
         cout << "Element not found in array !\n";
     }
+    void merge(vector<int> &v) {
+        merged.clear();
+        for (auto val : array) {
+            merged.push_back(val.first);
+        }
+        for (auto val : v) {
+            merged.push_back(val);
+        }
+        sort(merged.begin(), merged.end());
+    }
+    void mergedShow() {
+        for (auto v : merged) {
+            cout << v << " ";
+        }
+        cout << endl;
+    }
     void sparse_find(int elm) {
         for (int i{1}; i <= sTable[0][2]; i++) {
             if (sTable[i][2] == elm) {
@@ -119,7 +136,7 @@ int main() {
     while (1) {
         system("cls");
         string dimension;
-        cout << "\tHome menu\nEnter Dimension of the matrix: ";
+        cout << "\tHome menu\nEnter Dimension of the matrix: ('q' to quite) ";
         cin >> dimension;
         if (dimension[0] == 'q') {
             system("cls");
@@ -141,17 +158,31 @@ int main() {
                     system("cls");
                     oneD.show1DArray(1, 0);
                     cout << "Searching ways available\n";
-                    cout << "1) Liner Search\n2) Binary Search\n3) Edit array\n";
-                    // int ch; cin >> ch;
+                    cout << "1) Liner Search\n2) Binary Search\n3) Merge another array\n4) Edit array\n";
                     cout << "Enter number to find: ";
                     string f; cin >> f;
-                    if (f == "q" || f == "3") {
+                    if (f == "q" || f == "4") {
                         system("cls");
                         break;
                     }
                     system("cls");
                     if (f == "1") cout << "\nResult using Liner search\n", oneD.liner(stoi(f)), cout << "\n\n(Press Enter)\n";
                     else if (f == "2") cout << "\nResult using Binary search\n", oneD.binary_search(stoi(f)), cout << "\n\n(Press Enter)\n";
+                    else if (f == "3") {
+                        vector<int> arr;
+                        int sz{0};
+                        cout << "Enter new array size : ";
+                        cin >> sz;
+                        cout << "Enter the new array\n";
+                        for (int i{0}; i < sz; i++) {
+                            int tmp; cin >> tmp;
+                            arr.push_back(tmp);
+                        }
+                        oneD.merge(arr);
+                        system("cls");
+                        cout << "Merged Array is\n";
+                        oneD.mergedShow();
+                    }
                     else cout << "Invalid Choice\n";
                     cin.ignore();
                     cin.ignore();
@@ -164,7 +195,7 @@ int main() {
             Search twoD(stoi(r), stoi(c));
             while (1) {
                 system("cls");
-                cout << "1) Find a number\n2) Show the sparse table\n";
+                cout << "1) Find a number\n2) Show the sparse table\n4) Back\n";
                 string f; cin >> f;
                 if (f == "q") break;
                 else if (f == "1") {
