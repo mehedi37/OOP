@@ -66,9 +66,6 @@ class Search {
         cout << endl;
     }
     void binary_search(int elm) {
-        // for (auto v : array) {
-        //     cout << v.first << " " << v.second << '\n';
-        // }
         cout << endl;
         int l{0}, r{size-1};
         while (l <= r) {
