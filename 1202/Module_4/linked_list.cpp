@@ -78,6 +78,7 @@ class linked_list {
 int main() {
     linked_list l;
     while(1) {
+        system("cls");
         int choose;
         cout << "**Main Menu**\n";
         cout << "1) Create a list\n";
@@ -89,9 +90,11 @@ int main() {
         cin >> choose;
         switch(choose) {
             case 1:
+                system("cls");
                 l.create();
                 break;
             case 2:
+                system("cls");
                 cout << "Enter the value to insert : ";
                 int val;
                 cin >> val;
@@ -102,18 +105,21 @@ int main() {
                 l.insert(val, pos);
                 break;
             case 3:
+                system("cls");
                 cout << "Enter value to search : ";
                 int s;
                 cin >> s;
                 l.search(s);
                 break;
             case 4:
+                system("cls");
                 cout << "Enter value to delete : ";
                 int d;
                 cin >> d;
                 l.del(d);
                 break;
             case 5:
+                system("cls");
                 l.show();
                 break;
         }
