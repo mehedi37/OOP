@@ -1,99 +1,224 @@
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-class node {
-public:
-  int data;
-  node *next;
-  void show(node *tmp) {
-    if (tmp == NULL) {
-      cout << "List empty" << endl;
-    }
-    while (tmp != NULL) {
-      cout << tmp->data << " ";
-      tmp = tmp->next;
-    }
-  }
-  void insert(node *tmp, int val, int pos_val) {
-    while(tmp != NULL) {
-      if (tmp->data == pos_val) {
-        node *add = new node;
-        add->data = val;
-        add->next = tmp->next;
-        tmp->next = add;
-        cout << "Added\n";
-        return;
-      }
-    }
-    cout << "Not Found\n";
-  }
-  void del(node *tmp, int pos_val) {
-    node *h = tmp;
-    node *q = tmp;
-    if (tmp->data == pos_val) {
-      h = h->next;
-    }
-    while (h != NULL) {
-      if (h->data == pos_val) {
-        q->next = h->next;
-        cout << "Deleted\n";
-        return;
-      }
-      q = h;
-      h = h->next;
-    }
-    cout << "Not Found\n";
-  }
-  void search(node *tmp, int pos_val) {
-    node *h = tmp;
-    // node *q = tmp;
-    int cnt{1};
-    while (h != NULL) {
-      if (h->data == pos_val) {
-        cout << "Found\nAt : " << cnt++ << " node\n";
-        return;
-      }
-      h = h->next;
-    }
-    cout << "Not Found\n";
-  }
+class Node{
+    public:
+        int data;
+        Node *next;
 };
+
+class linked_list {
+ private:
+    int n, x;
+    Node *h;
+    Node *q;
+    Node *p;
+
+ public:
+    void create() {
+        h = NULL;
+        q = NULL;
+        p = NULL;
+        cout << "How many numbers : ";
+        cin >> n;
+        cout << endl;
+        for (int i=0; i < n; i++) {
+            p = new Node();
+            cin >> x;
+            p -> data = x;
+            if (h == NULL) {
+                h = p;
+            } else {
+                if (q != NULL) {
+                    q->next = p;
+                }
+            }
+            q = p;
+        }
+        system("cls");
+        cout << "\tList created\n";
+        cin.ignore();
+        cin.ignore();
+    }
+    // Normal display function to print only values
+    void display_Data() {
+        p = h;
+        if (p == NULL) {
+            cout << "List empty" << endl;
+        }
+        cout << "h";
+        while (p != NULL) {
+            cout << " -> " << p->data;
+            p = p->next;
+        }
+        cin.ignore();
+    }
+    void insert_Data() {
+        display_Data();
+        p = h;
+        q = h;
+        cout << "\nEnter index (0 based): ";
+        int idx;
+        cin >> idx;
+        cout << "Enter new number : ";
+        int up_val;
+        cin >> up_val;
+        system("cls");
+        int cnt{0};
+        if (idx == 0) {
+            Node *add = new Node;
+            add->next = h;
+            add->data = up_val;
+            h = add;
+            cout << "\n\tAdded\n";
+            cin.ignore();
+            cin.ignore();
+            return;
+        }
+        while (p != NULL) {
+            if (cnt == idx) {
+                // Adding new node to the list
+                Node *add = new Node;
+                add->data = up_val;
+                add->next = p;
+                q->next = add;
+                cout << "\n\tAdded\n";
+                cin.ignore();
+                cin.ignore();
+                return;
+            }
+            cnt++;
+            q = p;
+            p = p->next;
+        }
+        cout << "\n\tNot Found\n";
+        cin.ignore();
+        cin.ignore();
+    }
+    void delete_Data() {
+        p = h;
+        q = h;
+        cout << "Enter number to delete : ";
+        int pos_val;
+        cin >> pos_val;
+
+        // If the value is at beginning of list
+        if (p->data == pos_val) {
+            p = p->next;
+        }
+        system("cls");
+        while (p != NULL) {
+            if (p->data == pos_val) {
+                q->next = p->next;      // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
+                cout << "\n\tDeleted\n";
+                cin.ignore();
+                cin.ignore();
+                return;
+            }
+            q = p;      // First keeping the last node position into "q"
+            p = p->next;    // Then going to the next node
+        }
+        cout << "Not Found\n";
+        cin.ignore();
+        cin.ignore();
+    }
+    void search() {
+        p = h;
+        cout << "Which number to search ? ";
+        int pos_val;
+        cin >> pos_val;
+        int cnt{1};
+        system("cls");
+        while (p != NULL) {
+            if (p->data == pos_val) {
+                cout << "Found\nAt : " << cnt << " node\n";
+                cin.ignore();
+                cin.ignore();
+                return;
+            }
+            p = p->next;
+            cnt++;      // Keeping track of how many nodes have been visited
+        }
+        cout << "Not Found\n";
+        cin.ignore();
+        cin.ignore();
+    }
+    void update_Data() {
+        p = h;
+        cout << "Which number to update ? ";
+        int pos_val;
+        cin >> pos_val;
+        cout << "Enter new number : ";
+        int up_val;
+        cin >> up_val;
+        system("cls");
+        while (p != NULL) {
+            if (p->data == pos_val) {
+                p->data = up_val;
+                cout << "\n\tData Updated\n";
+                cin.ignore();
+                cin.ignore();
+                return;
+            }
+            p = p->next;
+        }
+        cout << "Val not found\n";
+        cin.ignore();
+        cin.ignore();
+    }
+};
+
 int main() {
-  node *head = NULL, *tail = NULL;
-  int n, x;
-  cout << "How many nodes you need?" << endl;
-  cin >> n;
-  for (int i = 1; i <= n; i++) {
-    cout << "Enter your node " << i << " value" << endl;
-    cin >> x;
-    node *tmp = new node;
-    tmp->data = x;
-    tmp->next = NULL;
-    if (head == NULL) {
-      head = tmp;
+    linked_list l;
+    while (1) {
+        system("cls");
+        cout << "*****MENU*****" <<endl;
+        cout << "1.Create" << endl;
+        cout << "2.Insert" << endl;
+        cout << "3.Delete" << endl;
+        cout << "4.Update" << endl;
+        cout << "5.Display" << endl;
+        cout << "6.Search a value" << endl;
+        cout << "7.Exit" << endl;
+        cout << "Enter option : ";
+        int option;
+        cin >> option;
+        cout << endl;
+        switch (option) {
+            case 1:
+                system("cls");
+                l.create();
+                break;
+            case 2:
+                system("cls");
+                l.insert_Data();
+                cout << endl;
+                break;
+            case 3:
+                system("cls");
+                l.delete_Data();
+                cout << endl;
+                break;
+            case 4:
+                system("cls");
+                l.update_Data();
+                cout << endl;
+                break;
+            case 5:
+                system("cls");
+                l.display_Data();
+                cout << endl;
+                cin.ignore();
+                break;
+            case 6:
+                system("cls");
+                l.search();
+                cout << endl;
+                break;
+        }
+        if (option == 7) {
+            cout << "End of program" << endl;
+            break;
+        }
     }
-    if (tail == NULL) {
-      tail = tmp;
-    }
-    else {
-      tail->next = tmp;
-      tail = tmp;
-    }
-  }
-  node *temp = head;
-  temp->show(temp);
-  cout << "\nTest insert : ";
-  int val, pos;
-  cin >> val >> pos;
-  temp->insert(temp, val, pos);
-  temp->show(temp);
-  cout << endl;
-  cout << "\nDelete an element : ";
-  int delt; cin >> delt;
-  temp->del(temp, delt);
-  temp->show(temp);
-  cout << "\nSearch an element : ";
-  int ss; cin >> ss;
-  temp->search(temp, ss);
-  temp->show(temp);
 }
