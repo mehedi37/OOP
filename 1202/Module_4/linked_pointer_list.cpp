@@ -65,6 +65,7 @@ class linked_list {
         cin >> up_val;
         system("cls");
         int cnt{0};
+        // handling 0 index insertion
         if (idx == 0) {
             Node *add = new Node;
             add->next = h;
@@ -96,15 +97,17 @@ class linked_list {
         cin.ignore();
     }
     void delete_Data() {
+        display_Data();
         p = h;
         q = h;
-        cout << "Enter number to delete : ";
+        cout << "\nEnter number to delete : ";
         int pos_val;
         cin >> pos_val;
 
         // If the value is at beginning of list
         if (p->data == pos_val) {
-            p = p->next;
+            h = p->next;
+            return;
         }
         system("cls");
         while (p != NULL) {
@@ -123,8 +126,9 @@ class linked_list {
         cin.ignore();
     }
     void search() {
+        display_Data();
         p = h;
-        cout << "Which number to search ? ";
+        cout << "\nWhich number to search ? ";
         int pos_val;
         cin >> pos_val;
         int cnt{1};
@@ -144,8 +148,9 @@ class linked_list {
         cin.ignore();
     }
     void update_Data() {
+        display_Data();
         p = h;
-        cout << "Which number to update ? ";
+        cout << "\nWhich number to update ? ";
         int pos_val;
         cin >> pos_val;
         cout << "Enter new number : ";
