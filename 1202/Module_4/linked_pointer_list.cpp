@@ -24,6 +24,7 @@ class linked_list {
         cout << endl;
         for (int i=0; i < n; i++) {
             p = new Node();
+            // int *x = new int[10];
             cin >> x;
             p -> data = x;
             if (h == NULL) {
@@ -103,11 +104,20 @@ class linked_list {
         cout << "\nEnter number to delete : ";
         int pos_val;
         cin >> pos_val;
-
+        bool fg{1}, repeat{0};
+        cout << "Want to search all the ? (1 or 0) : ";
+        cin >> repeat;
         // If the value is at beginning of list
-        if (p->data == pos_val) {
-            h = p->next;
-            return;
+        while (h->data == pos_val && h->next != NULL) {
+            h = h->next;
+            fg = 0;
+            cout << "\n\tDeleted\n";
+            // Bug fixed for all same value deletion
+            if (h->next == NULL) {
+                h = NULL;
+                return;
+            }
+            if (!repeat) return;
         }
         system("cls");
         while (p != NULL) {
@@ -115,13 +125,13 @@ class linked_list {
                 q->next = p->next;      // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
                 cout << "\n\tDeleted\n";
                 cin.ignore();
-                cin.ignore();
-                return;
+                fg = 0;
+                if (!repeat) return;
             }
             q = p;      // First keeping the last node position into "q"
             p = p->next;    // Then going to the next node
         }
-        cout << "Not Found\n";
+        if (fg) cout << "Not Found\n";
         cin.ignore();
         cin.ignore();
     }
@@ -133,17 +143,21 @@ class linked_list {
         cin >> pos_val;
         int cnt{1};
         system("cls");
+        bool fg{1}, repeat{0};
+        cout << "Want to search all the ? (1 or 0) : ";
+        cin >> repeat;
         while (p != NULL) {
             if (p->data == pos_val) {
-                cout << "Found\nAt : " << cnt << " node\n";
+                cout << "\nFound\nAt : " << cnt << " node\n";
                 cin.ignore();
                 cin.ignore();
-                return;
+                fg = 0;
+                if (!repeat) return;
             }
             p = p->next;
             cnt++;      // Keeping track of how many nodes have been visited
         }
-        cout << "Not Found\n";
+        if (fg) cout << "Not Found\n";
         cin.ignore();
         cin.ignore();
     }
@@ -157,17 +171,21 @@ class linked_list {
         int up_val;
         cin >> up_val;
         system("cls");
+        bool fg{1}, repeat{0};
+        cout << "Want to search all the ? (1 or 0) : ";
+        cin >> repeat;
         while (p != NULL) {
             if (p->data == pos_val) {
                 p->data = up_val;
                 cout << "\n\tData Updated\n";
                 cin.ignore();
                 cin.ignore();
-                return;
+                fg = 0;
+                if (!repeat) return;
             }
             p = p->next;
         }
-        cout << "Val not found\n";
+        if (fg) cout << "Val not found\n";
         cin.ignore();
         cin.ignore();
     }
