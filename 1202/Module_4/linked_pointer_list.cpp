@@ -3,8 +3,8 @@ using namespace std;
 
 class Node{
     public:
-        int data;
-        Node *next;
+        int data{0};
+        Node *next = NULL;
 };
 
 class linked_list {
@@ -13,6 +13,8 @@ class linked_list {
     Node *h;
     Node *q;
     Node *p;
+    Node *split[1000]{NULL};
+    int split_count{0};
 
  public:
     void create() {
@@ -35,8 +37,9 @@ class linked_list {
                 }
             }
             q = p;
+    // cout << "\nAfter\nh : " << h << " p: " << p << " q : " << q << " p.data : " << p->data << " q.data : " << q->data << endl;
         }
-        system("cls");
+        // system("cls");
         cout << "\tList created\n";
         cin.ignore();
         cin.ignore();
@@ -49,6 +52,7 @@ class linked_list {
         }
         cout << "h";
         while (p != NULL) {
+            // cout << "\np : " << p << " p->data : " << p->data << " p->next: " << p->next << endl;
             cout << " -> " << p->data;
             p = p->next;
         }
@@ -122,7 +126,7 @@ class linked_list {
         system("cls");
         while (p != NULL) {
             if (p->data == pos_val) {
-                q->next = p->next;      // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
+                q->next = p->next;    // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
                 cout << "\n\tDeleted\n";
                 cin.ignore();
                 fg = 0;
@@ -133,6 +137,64 @@ class linked_list {
         }
         if (fg) cout << "Not Found\n";
         cin.ignore();
+        cin.ignore();
+    }
+    void split_list() {
+        cout << "How many splits : ";
+        cin >> split_count;
+        int spl[split_count]{0};
+        for (int i{0}; i < split_count; i++) {
+            cin >> spl[i];
+        }
+        p = h;
+        q = h;
+        split[0] = h;       // Keeping the head
+        int cnt{0}, idx{1};
+        while (p != NULL && idx <= split_count) {
+            if (cnt == spl[idx-1]) {
+                split[idx] = p;
+                idx++;
+                q->next = NULL;
+                p = p->next;
+                cnt++;
+                continue;
+            }
+            cnt++;
+            q = p;
+            p = p->next;
+        }
+        cout << "Splitted\n";
+        cin.ignore();
+    }
+    void split_list_show(int cnt) {
+        for (int i{0}; i < cnt; i++) {
+            p = split[i];
+            if (p == NULL) {
+                cout << "List empty" << endl;
+            }
+            while (p != NULL) {
+                cout << " -> " << p->data;
+                p = p->next;
+            }
+            cout << endl;
+        }
+        cin.ignore();
+    }
+    void merge(int cnt) {
+        for (int i{0}; i < split_count; i++) {
+            p = split[i];
+            if (p == NULL) {
+                cout << "List empty" << endl;
+            }
+            while (p->next != NULL) {
+                p = p->next;
+            }
+            p->next = split[i+1];
+            split[i+1] = NULL;
+            split_count--;
+        }
+        split[0] = h;
+        cout << "Merged\n";
         cin.ignore();
     }
     void search() {
@@ -160,6 +222,9 @@ class linked_list {
         if (fg) cout << "Not Found\n";
         cin.ignore();
         cin.ignore();
+    }
+    int s_cnt() {
+        return split_count;
     }
     void update_Data() {
         display_Data();
@@ -193,6 +258,8 @@ class linked_list {
 
 int main() {
     linked_list l;
+    // linked_list list[100];
+
     while (1) {
         system("cls");
         cout << "*****MENU*****" <<endl;
@@ -202,11 +269,15 @@ int main() {
         cout << "4.Update" << endl;
         cout << "5.Display" << endl;
         cout << "6.Search a value" << endl;
-        cout << "7.Exit" << endl;
+        cout << "7.Split Linked List" << endl;
+        cout << "8.Merge Linked List" << endl;
+        cout << "9.Show Splits" << endl;
+        cout << "10.Exit" << endl;
         cout << "Enter option : ";
         int option;
         cin >> option;
         cout << endl;
+        int cnt{0};
         switch (option) {
             case 1:
                 system("cls");
@@ -238,8 +309,24 @@ int main() {
                 l.search();
                 cout << endl;
                 break;
+            case 7:
+                l.split_list();
+                break;
+            case 8:
+                cout << "How many list to merge ?" << endl;
+                cout << "Available is " << l.s_cnt() << endl;
+                cin >> cnt;
+                l.merge(cnt);
+                break;
+            case 9:
+                cout << "How many list to show ?" << endl;
+                cout << "Available is " << l.s_cnt()+1 << endl;
+                cin >> cnt;
+                l.split_list_show(cnt);
+                cin.ignore();
+                break;
         }
-        if (option == 7) {
+        if (option == 10) {
             cout << "End of program" << endl;
             break;
         }
