@@ -8,17 +8,27 @@ class stacked {
     int top = 0;
  public:
     void push(int at) {
-        while (top <= at) {
+        while (top < at) {
+            cout << "Top : " << top << endl;
             cin >> a[top++];
         }
     }
     void pop() {
+        if (top == 0) {
+            cout << "Stack empty can't pop\n";
+            a[top] = 0;
+            return;
+        }
         top--;
+        cout << "value popped !\n";
     }
     void topp() {
         cout << a[top] << endl;
     }
     void dis() {
+        if (top == 0) {
+            cout << "Stack is Empty";
+        }
         int tmp = top;
         while (tmp--) {
             cout << a[tmp] << " -> ";
@@ -37,28 +47,54 @@ class Node {
 class stack_linked {
  private:
     int n, x;
-    Node *h = NULL;
-    Node *tr = NULL;
+    Node *h;
+    Node *tp;
  public:
+    stack_linked() {
+        n = 0, x = 0;
+        h = NULL;
+        tp = NULL;
+    }
     void push() {
-        Node *p = new Node;
+        Node *p = new Node();
         cout << "Enter value : ";
         cin >> p->data;
-        h->next = p;
-        p->prev = h;
-        h = p;
+        cout << "Node created\n";
+        if (h == NULL) {
+            h = p;
+            h->prev = NULL;
+        } else {
+            if (tp != NULL) {
+                p->prev = tp;
+                tp->next = p;
+            }
+        }
+        tp = p;
     }
     void pop() {
-        h = h->prev;
-        h->next = NULL;
+        if (tp == h) {
+            tp = NULL;
+            return;
+        }
+        tp = tp->prev;
+        tp->next = NULL;
+        cout << "Poped \n";
     }
     void dis() {
-        tr = h;
-        while (tr != NULL) {
-            cout << tr->data << " -> ";
-            tr = tr->prev;
+        Node *tv = tp;
+        // if (tv == h) {
+        //     cout << "List is empty\n";
+        // }
+        if (tv == NULL) {
+            cout << "List Empty\n";
+            return;
         }
-        cout << endl;
+        while (tv->prev != NULL) {
+            cout << tv->data << " -> ";
+            // cout << tp->data << " <tp ";
+            tv = tv->prev;
+        }
+        cout << h->data << endl;
     }
 };
 
@@ -88,7 +124,6 @@ int main() {
                     break;
                 case 2:
                     st.pop();
-                    cout << "value popped !\n";
                     break;
                 case 3:
                     st.dis();

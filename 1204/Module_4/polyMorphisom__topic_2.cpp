@@ -12,7 +12,7 @@ class circuit {
     }
     circuit(int r, int i) {
         real = r;
-        img =i;
+        img = i;
     }
     void dis() {
         cout << real << (img < 0?"":"+") << img << "j" << endl;

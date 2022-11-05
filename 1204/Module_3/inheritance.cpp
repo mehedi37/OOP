@@ -25,5 +25,5 @@ class grandSon : public son {
 
 int main() {
     son s;
-    cout << s.getGold() << nn;
+    cout << s.getGold() << endl;
 }
