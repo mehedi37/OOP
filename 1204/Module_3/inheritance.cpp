@@ -3,14 +3,18 @@ using namespace std;
 
 class Father {
  private:
-    int money;
+    int money = 500;
  protected:
-    int gold;
+    int gold = 100;
  public:
-    int land;
-    int getMoney() {
-        return money;
-    }
+    int land = 200;
+};
+
+class son : protected Father {
+ public:
+    // int getMoney() {
+    //     return money;
+    // }
     int getGold() {
         return gold;
     }
@@ -18,12 +22,23 @@ class Father {
         return land;
     }
 };
-class son : public Father {
-};
+
 class grandSon : public son {
+ public:
+    // int getMoney() {
+    //     return money;
+    // }
+    int getGold() {
+        return gold;
+    }
+    int getLand() {
+        return land;
+    }
 };
 
 int main() {
     son s;
-    cout << s.getGold() << endl;
+    grandSon g;
+    cout << s.getLand() << endl;
+    cout << g.getLand() << endl;
 }
