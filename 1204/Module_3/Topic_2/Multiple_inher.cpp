@@ -3,32 +3,42 @@ using namespace std;
 
 class A {
  private:
-    int x;
+    int x{9};
  protected:
-    int y;
+    int y{10};
  public:
     int z;
 };
 
-class B : public A {
+class B {
+ private:
+    int p{0};
+ protected:
+    int q{1};
  public:
+    int r{2};
     B() {
         cout << "Created B\n";
     }
-    void BgetXYZ() {
-        // cout << "X : " << x << endl;  // Private
-        cout << "y : " << y << endl;
-        cout << "z : " << z << endl;
-    }
 };
+
 class C : public A, public B {
  public:
         C() {
             cout << "Created C\n";
         }
-        void CgetXYZ() {
+        void Cget() {
             // cout << "X : " << x << endl;  // Private
             cout << "y : " << y << endl;
             cout << "z : " << z << endl;
+
+            // cout << "p : " << p << endl; // Private
+            cout << "q : " << q << endl;
+            cout << "r : " << r << endl;
     }
 };
+
+int main() {
+    C c;
+    c.Cget();
+}
