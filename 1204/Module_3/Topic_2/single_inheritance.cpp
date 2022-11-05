@@ -9,6 +9,7 @@ class A {
  public:
     int z;
         A() : x{1}, y{0}, z{5} {
+            // cin >> x >> y >> z;  // Getting user input
             cout << "Created A\n";
         }
 };
