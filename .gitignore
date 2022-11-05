@@ -2,3 +2,7 @@
 *tempCodeRunnerFile.cpp
 *.o
 .vscode
+t.*
+test.*
+tst.*
+tt.*
