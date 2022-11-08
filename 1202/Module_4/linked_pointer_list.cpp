@@ -6,6 +6,7 @@ class Node{
  public:
     int data{0};
     Node *next = NULL;
+    Node *prev = NULL;
 };
 
 class linked_list {
