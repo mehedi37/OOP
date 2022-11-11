@@ -113,15 +113,15 @@ class linked_list {
         cout << "Want to search all the ? (1 or 0) : ";
         cin >> repeat;
         // If the value is at beginning of list
-        while (h->data == pos_val && h->next != NULL) {
-            h = h->next;
-            fg = 0;
-            cout << "\n\tDeleted\n";
+        while (h->data == pos_val) {
             // Bug fixed for all same value deletion
             if (h->next == NULL) {
                 h = NULL;
                 return;
             }
+            h = h->next;
+            fg = 0;
+            cout << "\n\tDeleted\n";
             if (!repeat) return;
         }
         system("cls");
