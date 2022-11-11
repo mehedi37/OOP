@@ -35,6 +35,7 @@ class linked_list {
             } else {
                 if (q != NULL) {
                     q->next = p;
+                    p->prev = q;
                 }
             }
             q = p;
@@ -48,7 +49,7 @@ class linked_list {
     // Normal display function to print only values
     void display_Data() {
         p = h;
-        if (p == NULL) {
+        if (p != NULL) {
             cout << "List empty" << endl;
         }
         cout << "h";
@@ -62,40 +63,44 @@ class linked_list {
     void insert_Data() {
         display_Data();
         p = h;
-        q = h;
-        cout << "\nEnter index (0 based): ";
-        int idx;
-        cin >> idx;
+        cout << "\nEnter Target value: ";
+        int tval;
+        cin >> tval;
         cout << "Enter new number : ";
         int up_val;
         cin >> up_val;
         system("cls");
-        int cnt{0};
         // handling 0 index insertion
-        if (idx == 0) {
+        if (tval == h->data) {
+            bool in;
+            cout << "Want to insert beginning of the list ? (1 or 0) ";
+            cin >> in;
             Node *add = new Node;
-            add->next = h;
             add->data = up_val;
-            h = add;
+            if (in) {
+                add->next = h;
+                h = add;
+            } else {
+                add->next = h->next;
+                h->next = add;
+            }
             cout << "\n\tAdded\n";
             cin.ignore();
             cin.ignore();
             return;
         }
         while (p != NULL) {
-            if (p->data == idx) {
+            if (p->data == tval) {
                 // Adding new node to the list
                 Node *add = new Node();
                 add->data = up_val;
-                add->next = p;
-                q->next = add;
+                add->next = p->next;
+                p->next = add;
                 cout << "\n\tAdded\n";
                 cin.ignore();
                 cin.ignore();
                 return;
             }
-            cnt++;
-            q = p;
             p = p->next;
         }
         cout << "\n\tNot Found\n";
@@ -105,7 +110,6 @@ class linked_list {
     void delete_Data() {
         display_Data();
         p = h;
-        q = h;
         cout << "\nEnter number to delete : ";
         int pos_val;
         cin >> pos_val;
@@ -119,7 +123,6 @@ class linked_list {
             cout << "\n\tDeleted\n";
             // Bug fixed for all same value deletion
             if (h->next == NULL) {
-                h = NULL;
                 return;
             }
             if (!repeat) return;
@@ -127,105 +130,17 @@ class linked_list {
         system("cls");
         while (p != NULL) {
             if (p->data == pos_val) {
-                q->next = p->next;    // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
+                p->prev->next = p->next;    // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
                 cout << "\n\tDeleted\n";
                 cin.ignore();
                 fg = 0;
                 if (!repeat) return;
             }
-            q = p;      // First keeping the last node position into "q"
             p = p->next;    // Then going to the next node
         }
         if (fg) cout << "Not Found\n";
         cin.ignore();
         cin.ignore();
-    }
-    void split_list() {
-        cout << "How many splits : ";
-        cin >> split_count;
-        int spl[split_count]{0};
-        for (int i{0}; i < split_count; i++) {
-            cin >> spl[i];
-        }
-        p = h;
-        q = h;
-        split[0] = h;       // Keeping the head
-        int cnt{0}, idx{1};
-        while (p != NULL && idx <= split_count) {
-            if (cnt == spl[idx-1]) {
-                split[idx] = p;
-                idx++;
-                q->next = NULL;
-                p = p->next;
-                cnt++;
-                continue;
-            }
-            cnt++;
-            q = p;
-            p = p->next;
-        }
-        cout << "Splitted\n";
-        cin.ignore();
-    }
-    void split_list_show(int cnt) {
-        for (int i{0}; i < cnt; i++) {
-            p = split[i];
-            if (p == NULL) {
-                cout << "List empty" << endl;
-            }
-            while (p != NULL) {
-                cout << " -> " << p->data;
-                p = p->next;
-            }
-            cout << endl;
-        }
-        cin.ignore();
-    }
-    void merge(int cnt) {
-        for (int i{0}; i < split_count; i++) {
-            p = split[i];
-            if (p == NULL) {
-                cout << "List empty" << endl;
-            }
-            while (p->next != NULL) {
-                p = p->next;
-            }
-            p->next = split[i+1];
-            split[i+1] = NULL;
-            split_count--;
-        }
-        split[0] = h;
-        cout << "Merged\n";
-        cin.ignore();
-    }
-    void search() {
-        display_Data();
-        p = h;
-        cout << "\nWhich number to search ? ";
-        int pos_val;
-        cin >> pos_val;
-        int cnt{1};
-        system("cls");
-        bool fg{1}, repeat{0};
-        cout << "Want to search all the ? (1 or 0) : ";
-        cin >> repeat;
-        while (p != NULL) {
-            if (p->data == pos_val) {
-                cout << "\nFound\nAt : " << cnt << " node\n";
-                cin.ignore();
-                cin.ignore();
-                fg = 0;
-                if (!repeat) return;
-            }
-            p = p->next;
-            cnt++;      // Keeping track of how many nodes have been visited
-        }
-        if (fg) cout << "Not Found\n";
-        cin.ignore();
-        cin.ignore();
-    }
-    int s_cnt() {
-        return split_count;
     }
     void update_Data() {
         display_Data();
@@ -255,32 +170,6 @@ class linked_list {
         cin.ignore();
         cin.ignore();
     }
-
-// For test purpose
-    void mk_circular() {
-        p = h;
-        if (p == NULL) {
-            cout << "List empty" << endl;
-        }
-        while (p->next != NULL) {
-            p = p->next;
-        }
-        p->next = h;
-        cin.ignore();
-    }
-    void mk_liner() {
-        p = h;
-        if (p->next == h) {
-            cout << "List empty" << endl;
-        }
-        while (p->next != h) {
-            p = p->next;
-        }
-        p->next = NULL;
-        cin.ignore();
-    }
-// Not for module, ignore till this line
-
 
 
 /* For Circular Linked List */
@@ -324,56 +213,56 @@ void c_create() {
     void c_insert_Data() {
         c_display_Data();
         p = h;
-        q = h;
-        cout << "\nEnter index (0 based): ";
-        int idx;
-        cin >> idx;
+        cout << "\nEnter Target value: ";
+        int tval;
+        cin >> tval;
         cout << "Enter new number : ";
         int up_val;
         cin >> up_val;
         system("cls");
-        int cnt{0};
         // handling 0 index insertion
-        if (idx == 0) {
+        if (tval == h->data) {
+            bool in;
+            cout << "Want to insert begining of the list ? (1 or 0) ";
+            cin >> in;
             Node *add = new Node;
-            add->next = h;
             add->data = up_val;
-            h = add;
+            if (in) {
+                add->next = h;
+                h = add;
+            } else {
+                add->next = h->next;
+                h->next = add;
+            }
             cout << "\n\tAdded\n";
             cin.ignore();
             cin.ignore();
             return;
         }
-        while (p->next != h) {
-            if (cnt == idx) {
-                Node *add = new Node;
+
+// BUG
+        bool f{1};
+        while (p != h && f) {
+            if (p->data == tval) {
+                // Adding new node to the list
+                Node *add = new Node();
                 add->data = up_val;
-                add->next = p;
-                q->next = add;
+                add->next = p->next;
+                p->next = add;
                 cout << "\n\tAdded\n";
                 cin.ignore();
                 cin.ignore();
                 return;
             }
-            cnt++;
-            q = p;
             p = p->next;
-        }
-        cnt++;
-        if (cnt == idx) {
-            Node *add = new Node;
-            add->data = up_val;
-            add->next = p;
-            q->next = add;
-            cout << "\n\tAdded\n";
-            cin.ignore();
-            cin.ignore();
-            return;
+            f = 0;
         }
         cout << "\n\tNot Found\n";
         cin.ignore();
         cin.ignore();
     }
+
+
     void c_delete_Data() {
         c_display_Data();
         p = h;
@@ -398,113 +287,20 @@ void c_create() {
         system("cls");
         while (p->next != h) {
             if (p->data == pos_val) {
-                q->next = p->next;    // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
+                p->prev->next = p->next;    // Keeping the deleted node (p)'s next location (p.next) to the previous node "q"
                 cout << "\n\tDeleted\n";
                 cin.ignore();
                 fg = 0;
                 if (!repeat) return;
             }
-            q = p;      // First keeping the last node position into "q"
             p = p->next;    // Then going to the next node
         }
         if (p->data == pos_val) {
-            q->next = p->next;
+            p->prev->next = p->next;
             cout << "\n\tDeleted\n";
             cin.ignore();
             fg = 0;
             return;
-        }
-        if (fg) cout << "Not Found\n";
-        cin.ignore();
-        cin.ignore();
-    }
-    void c_split_list() {
-        cout << "How many splits : ";
-        cin >> split_count;
-        int spl[split_count]{0};
-        for (int i{0}; i < split_count; i++) {
-            cin >> spl[i];
-        }
-        p = h;
-        q = h;
-        split[0] = h;       // Keeping the head
-        int cnt{0}, idx{1};
-        while (p->next != h && idx <= split_count) {
-            if (cnt == spl[idx-1]) {
-                split[idx] = p;
-                idx++;
-                q->next = split[idx-1];
-                p = p->next;
-                cnt++;
-                continue;
-            }
-            cnt++;
-            q = p;
-            p = p->next;
-        }
-        if (cnt == spl[idx-1]) {
-            split[idx] = p;
-            idx++;
-            q->next = split[idx-1];
-            p = p->next;
-            cnt++;
-        }
-        cout << "Splitted\n";
-        cin.ignore();
-    }
-    void c_split_list_show(int cnt) {
-        for (int i{0}; i < cnt; i++) {
-            p = split[i];
-            if (p->next == h) {
-                cout << "List empty" << endl;
-            }
-            while (p->next != h) {
-                cout << " -> " << p->data;
-                p = p->next;
-            }
-            cout << " -> " << p->data;
-            cout << endl;
-        }
-        cin.ignore();
-    }
-    void c_merge(int cnt) {
-        for (int i{0}; i < split_count; i++) {
-            p = split[i];
-            if (p == NULL) {
-                cout << "List empty" << endl;
-            }
-            while (p->next != split[i]) {
-                p = p->next;
-            }
-            p->next = split[i+1];
-            split[i+1] = NULL;
-            split_count--;
-        }
-        split[0] = h;
-        cout << "Merged\n";
-        cin.ignore();
-    }
-    void c_search() {
-        c_display_Data();
-        p = h;
-        cout << "\nWhich number to search ? ";
-        int pos_val;
-        cin >> pos_val;
-        int cnt{1};
-        system("cls");
-        bool fg{1}, repeat{0};
-        cout << "Want to search all the ? (1 or 0) : ";
-        cin >> repeat;
-        while (p->next != h) {
-            if (p->data == pos_val) {
-                cout << "\nFound\nAt : " << cnt << " node\n";
-                cin.ignore();
-                cin.ignore();
-                fg = 0;
-                if (!repeat) return;
-            }
-            p = p->next;
-            cnt++;      // Keeping track of how many nodes have been visited
         }
         if (fg) cout << "Not Found\n";
         cin.ignore();
@@ -556,11 +352,7 @@ int main() {
         cout << "3.Delete" << endl;
         cout << "4.Update" << endl;
         cout << "5.Display" << endl;
-        cout << "6.Search a value" << endl;
-        cout << "7.Split Linked List" << endl;
-        cout << "8.Merge Linked List" << endl;
-        cout << "9.Show Splits" << endl;
-        cout << "10.Exit" << endl;
+        cout << "6.Exit" << endl;
         cout << "Enter option : ";
         int option;
         cin >> option;
@@ -597,33 +389,8 @@ int main() {
                 cout << endl;
                 cin.ignore();
                 break;
-            case 6:
-                system("cls");
-                if (cir == 2) l.search();
-                else l.c_search();
-                cout << endl;
-                break;
-            case 7:
-                if (cir == 2) l.c_split_list();
-                else l.c_split_list();
-                break;
-            case 8:
-                cout << "How many list to merge ?" << endl;
-                cout << "Available is " << l.s_cnt() << endl;
-                cin >> cnt;
-                if (cir == 2) l.merge(cnt);
-                else l.c_merge(cnt);
-                break;
-            case 9:
-                cout << "How many list to show ?" << endl;
-                cout << "Available is " << l.s_cnt()+1 << endl;
-                cin >> cnt;
-                if (cir == 2) l.split_list_show(cnt);
-                else l.c_split_list_show(cnt);
-                cin.ignore();
-                break;
         }
-        if (option == 10) {
+        if (option == 6) {
             cout << "End of program" << endl;
             break;
         }
