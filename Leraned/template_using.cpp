@@ -58,7 +58,7 @@ int main() {
     multNumb intType(5, 6);
     multNumb intDouble(6, 2.2);
     multNumb DoubleInt(7.2, 2.2);
-    multNumb intDouble(6, 2.2);
+    // multNumb intDouble(6, 2.2);
     cout << doubleType.sum() << endl;
     cout << intType.sum() << endl;
 }
