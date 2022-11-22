@@ -18,5 +18,4 @@ int main() {
     tx.swap(bx);
     cout << "tx: " << get<0>(tx) << " " << get<1>(tx) << " " << get<2>(tx) << " " << endl;
     cout << "bx: " << get<0>(bx) << " " << get<1>(bx) << " " << get<2>(bx) << " " << endl;
-    // 5
 }

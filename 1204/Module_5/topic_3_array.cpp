@@ -24,5 +24,4 @@ int main() {
     cout << "Data: " << ax.data() << endl;
     cout << ax.cbegin() << endl;
     cout << ax.cend() << endl;
-    // 13 methods used
 }

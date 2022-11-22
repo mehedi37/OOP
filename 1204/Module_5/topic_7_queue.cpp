@@ -11,5 +11,4 @@ int main() {
     cout << qu.back() << endl;
     qu.pop();
     cout << qu.empty() << endl;
-    // 6
 }

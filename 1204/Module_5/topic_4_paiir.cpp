@@ -14,5 +14,4 @@ int main() {
     px.swap(bx);
     cout << "px : " << px.first << " " << px.second << endl;
     cout << "bx : " << bx.first << " " << bx.second << endl;
-    // 7
 }

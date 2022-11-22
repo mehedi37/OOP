@@ -11,5 +11,4 @@ int main() {
     cout << st.top() << endl;
     st.pop();
     cout << st.empty() << endl;
-    // 5
 }
