@@ -19,23 +19,9 @@ Copyright [2022] Mehedi_Hasan
 using namespace std;
 
 
-template <class T> class numb {
- private:
-    T x;
-    T y;
- public:
-    numb(T x = 0, T y = 0) {
-        this->x = x;
-        this->y = y;
-    }
-    T sum() {
-        return x+y;
-    }
-};
 
 
-template <typename T, class U> class multNumb {
-// template <class T = double, class U = double> class multNumb {     // can also be declared as this
+template <typename T, typename U> class multNumb {
  private:
     T x;
     U y;
@@ -48,17 +34,14 @@ template <typename T, class U> class multNumb {
         this->x = x;
         this->y = y;
     }
-    T sum() {       // ekta dilei hb, higher type ta cast hoy automatic
+    T sum() {
         return x+y;
     }
 };
 
 int main() {
-    multNumb doubleType(5.2, 5.5);
-    multNumb intType(5, 6);
-    multNumb intDouble(6, 2.2);
-    multNumb DoubleInt(7.2, 2.2);
-    multNumb intDouble(6, 2.2);
-    cout << doubleType.sum() << endl;
-    cout << intType.sum() << endl;
+    multNumb m;
+    while(1) {
+        //
+    }
 }
