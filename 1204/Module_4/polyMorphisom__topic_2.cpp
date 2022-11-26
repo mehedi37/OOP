@@ -38,10 +38,19 @@ class circuit {
         tmp.img = this->img/(a.real+a.img);
         return tmp;
     }
+    // object complement
     circuit operator !() {
         circuit tmp;
         tmp.real = this->real;
         tmp.img = this->img*-1;
+        return tmp;
+    }
+    // object inverse
+    circuit operator ~() {
+        circuit tmp;
+        int div = (this->real*this->real + this->img*this->img);
+        tmp.real = this->real/div;
+        tmp.img = (this->img*-1)/div;
         return tmp;
     }
 };

@@ -11,14 +11,9 @@ void towerOfHanoi(int n, char from_rod, char to_rod, char aux_rod)
 	towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
 }
 
-// Driver code
-int main()
-{
+int main() {
 	int N = 3;
-
-	// A, B and C are names of rods
+    cin >> N;
 	towerOfHanoi(N, 'A', 'C', 'B');
 	return 0;
 }
-
-// This is code is contributed by rathbhupendra

@@ -1,7 +1,9 @@
 #include <iostream>
 using namespace std;
 
-int ack(int m, int n) {
+#define ll long long
+
+ll ack(ll m, ll n) {
     if (m == 0){
         return n + 1;
     }
@@ -11,11 +13,12 @@ int ack(int m, int n) {
     else if ((m > 0) && (n > 0)) {
         return ack(m - 1, ack(m, n - 1));
     }
+    return 1;
 }
 
 int main() {
-    int A;
-    A = ack(1, 2);
+    ll A;
+    A = ack(3, 4);
     cout << A << endl;
 return 0;
 }

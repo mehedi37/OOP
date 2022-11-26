@@ -7,14 +7,14 @@ class A {
 };
 class B : public A {
  public:
-     void print() {
+    void print() {
         cout << "Inside Print() of class B\n";
     }
 };
 
 int main() {
-    // A a;              // Pure virtual function
-    // a.print();       // Abstract class
+    // A a;              // Abstract class
+    // a.print();       // Pure virtual function
     // B b;
     // b.print();       // From B
     // A a;
