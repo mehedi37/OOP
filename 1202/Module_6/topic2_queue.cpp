@@ -13,6 +13,7 @@ class Queue {
     Node *fr = NULL;
     Node *rr = NULL;
     Node *p = NULL;
+
  public:
     void create() {
         fr = rr = p = NULL;
