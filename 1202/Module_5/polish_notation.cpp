@@ -12,7 +12,7 @@ class stacked {
         a[top++] = at;
     }
     int pop() {
-        return a[top--];
+        return a[--top];
     }
     int postfix_res(const string &s) {
         int n1, n2, n3, num, i{0};
@@ -25,7 +25,7 @@ class stacked {
                 n2 = pop();
                 if (s[i] == '+') n3 = n1+n2;
                 else if (s[i] == '-') n3 = n1-n2;
-                else if (s[i] == '/') n3 = n1/n2;
+                else if (s[i] == '/') n3 = n2/n1;
                 else if (s[i] == '*') n3 = n1*n2;
                 push(n3);       // NOLINT
             }
@@ -95,5 +95,5 @@ int main() {
     cout << "Result of the postfix\n" << polish << " = " << p.postfix_res(x) << endl;
 }
 
-// 12+31+*2/
+// 12+31+*2/        = 6
 // ((1+2)*(3+1))/2
