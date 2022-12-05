@@ -23,5 +23,7 @@ int main() {
     cout << ax.end() << endl;
     cout << "Data: " << ax.data() << endl;
     cout << ax.cbegin() << endl;
+    cout << *ax.crbegin() << endl;
+    cout << *ax.rbegin() << endl;
     cout << ax.cend() << endl;
 }
