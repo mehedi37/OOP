@@ -6,7 +6,6 @@ int partition(int arr[], int low, int high) {
     int i = (low - 1);   // Index of smaller element and indicates
 
     for (int j = low; j <= high - 1; j++) {
-        // If current element is smaller than the pivot
         if (arr[j] < pivot) {
             i++;    // increment index of smaller element
             swap(arr[i], arr[j]);
@@ -18,13 +17,9 @@ int partition(int arr[], int low, int high) {
 
 
 void quickSort(int arr[], int low, int high) {
+    // cout<< "low =" << low <<" high="<< high <<endl;
     if (low < high) {
-        /* pi is partitioning index, arr[p] is now
-        at right place */
         int pi = partition(arr, low, high);
-
-        // Separately sort elements before
-        // partition and after partition
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
     }
@@ -44,7 +39,7 @@ int main() {
     for (int i{0}; i < n; i++) {
         cout << a[i] << " ";
     }
-    quickSort(a, n);
+    quickSort(a, 0, n-1);
     cout << endl << "After insertion sorting : \n";
     for (int i{0}; i < n; i++) {
         cout << a[i] << " ";
