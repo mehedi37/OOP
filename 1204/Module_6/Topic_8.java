@@ -49,11 +49,21 @@ public class Topic_8 {
 
         // For-each part
         System.out.println("-- After Sorting --");
+
+        // Built in forEach
         arrList.forEach((x) -> System.out.print(x + " "));
+        System.out.println();
+
+        // Sir er dewa For-Each
+        for (int arr : arrList) {
+            System.out.print(arr + " ");
+        }
+        System.out.println();
 
 
     // 7) Delete all elements in array
-        arrList.removeAll(arrList);
+        // arrList.removeAll(arrList);
+        arrList.clear();    // Both work same
         System.out.println("\nAray List empty : " + arrList.isEmpty());
     }
 }
