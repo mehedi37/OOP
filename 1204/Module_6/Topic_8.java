@@ -50,6 +50,11 @@ public class Topic_8 {
         // For-each part
         System.out.println("-- After Sorting --");
         arrList.forEach((x) -> System.out.print(x + " "));
+
+
+    // 7) Delete all elements in array
+        arrList.removeAll(arrList);
+        System.out.println("\nAray List empty : " + arrList.isEmpty());
     }
 }
 
