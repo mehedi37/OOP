@@ -1,47 +1,47 @@
 #include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
-struct Node{
-    Node *ll;
+struct Node {
+    Node *leftNode;
     int data;
-    Node *rl;
+    Node *rightNode;
 };
 
-Node *ax[50];
+Node *LList[50];
 Node *h, *p;
 
 int main() {
     ifstream file;
-    int ll[50];
+    int leftNode[50];
     int data[50];
-    int rl[50];
+    int rightNode[50];
     file.open("array.txt");
     int i=1, n;
-    while (file >> ll[i]) {
+    while (file >> leftNode[i]) {
         file>>data[i];
-        file>>rl[i];
+        file>>rightNode[i];
         i++;
     }
     n=i-1;
     for(i=1;i<=n;i++)
-        cout<<ll[i]<<" "<<char(data[i])<<" "<<rl[i]<<endl;
+        cout<<leftNode[i]<<" "<<char(data[i])<<" "<<rightNode[i]<<endl;
 
     for(i=1;i<=n;i++)
-        ax[i]=new Node();
+        LList[i]=new Node();
 
     for(i=1;i<=n;i++)
-        cout<<"Node "<<char(i+64)<<" "<<ax[i]<<endl;
+        cout<<"Node "<<char(i+64)<<" "<<LList[i]<<endl;
 
-    ax[0]=0;
-    h=ax[1];
+    LList[0]=0;
+    h=LList[1];
     for(i=1;i<=n;i++){
-        ax[i]->data=data[i];
-        ax[i]->ll=ax[ll[i]];
-        ax[i]->rl=ax[rl[i]];
+        LList[i]->data=data[i];
+        LList[i]->leftNode=LList[leftNode[i]];
+        LList[i]->rightNode=LList[rightNode[i]];
     }
     cout<<endl<<"The Tree is"<<endl;
     for (i=1;i<=n;i++) {
-        cout<<ax[i] ->ll<<" "<<char(ax[i]->data)<<" "<<ax[i]->rl<<endl;
+        cout<<LList[i] ->leftNode<<" "<<char(LList[i]->data)<<" "<<LList[i]->rightNode<<endl;
     }
 
 }
