@@ -40,7 +40,7 @@ int main() {
         ax[i]->rl=ax[rl[i]];
     }
     cout<<endl<<"The Tree is"<<endl;
-    for(i=1;i<=n;i++){
+    for (i=1;i<=n;i++) {
         cout<<ax[i] ->ll<<" "<<char(ax[i]->data)<<" "<<ax[i]->rl<<endl;
     }
 
