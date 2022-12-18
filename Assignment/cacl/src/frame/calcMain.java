@@ -118,7 +118,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
                 case "+": str1 = Integer.toString(val1+val2); break;
                 case "-": str1 = Integer.toString(val1-val2); break;
                 case "x": str1 = Integer.toString(val1*val2); break;
-                case "/": str1 = Double.toString(Math.floor(((double)(val1)/val2) * 1000000) / 1000000); break;
+                case "/": str1 = (val2 != 0 ? Double.toString(Math.floor(((double)(val1)/val2) * 1000000) / 1000000) : "Math Error"); break;
                 case "=": lbl.setText(str1); op = ""; break;
             }
 
