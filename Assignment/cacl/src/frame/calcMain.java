@@ -31,6 +31,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
 
 // Display font changed
     Font disFont = new Font("DigifaceWide", Font.ITALIC, 22);
+    Font btnFonts = new Font("Areal", Font.BOLD, 20);
 
 // Container created, which will contain all buttons and display
     Container c;
@@ -50,6 +51,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
         for (i = 1; i < 10; i++) {
             bx[i] = new JButton(Integer.toString(i));
             bx[i].setBounds(xStart+(j-1)*xIncrement, yStart+(k-1)*yIncrement, 60, 60);
+            bx[i].setFont(btnFonts);
             c.add(bx[i]);
 
             // action listener
@@ -67,6 +69,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
         bx[0].setBounds(xStart, yStart+(k-1)*65, 60, 60);
         bx[0].addActionListener(this);
         bx[0].addMouseListener(this);
+        bx[0].setFont(btnFonts);
         c.add(bx[0]);
 
 
@@ -78,6 +81,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
             bx[i].setBounds(xStart+j*xIncrement, yStart+(k-1)*yIncrement, 60, 60);
             bx[i].addActionListener(this);
             bx[i].addMouseListener(this);
+            bx[i].setFont(btnFonts);
             c.add(bx[i]);
             if (i > 11) {
                 k--;
@@ -130,7 +134,6 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
         } else {        // If any operation key is pressed (+, -, /, *)
             for (int i = 10; i < 16; i++) {
                 if (e.getSource() == bx[i]) {
-                    System.out.println("OP triggered");
                     switch(i) {
                         case 10: op = "+"; break;
                         case 11: op = "-"; break;
@@ -141,6 +144,8 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
                 }
             }
             lbl.setText(op);
+
+            // If only number is clicked
             for (int i = 0; i < 10; i++) {
                 if (e.getSource() == bx[i]) {
                     str1 += Integer.toString(i);
@@ -167,11 +172,13 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        Font bigFont = new Font("Areal", Font.BOLD, 25);
         for (int i = 0; i < 16; i++) {
             if (e.getSource() == bx[15]) {
+                bx[15].setFont(bigFont);
                 bx[15].setForeground(Color.WHITE);
             } else if (e.getSource() == bx[i]) {
+                bx[i].setFont(bigFont);
                 bx[i].setForeground(Color.red);
             }
         }
@@ -181,6 +188,7 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
         for (int i = 0; i < 16; i++) {
             if (e.getSource() == bx[i]) {
+                bx[i].setFont(btnFonts);
                 bx[i].setForeground(null);
             }
         }
