@@ -174,10 +174,12 @@ class myFrameCalc extends JFrame implements ActionListener, MouseListener {
     public void mouseEntered(MouseEvent e) {
         Font bigFont = new Font("Areal", Font.BOLD, 25);
         for (int i = 0; i < 16; i++) {
+
+        // Exceptional color for clear btn
             if (e.getSource() == bx[15]) {
                 bx[15].setFont(bigFont);
                 bx[15].setForeground(Color.WHITE);
-            } else if (e.getSource() == bx[i]) {
+            } else if (e.getSource() == bx[i]) {        // Exceptional color for equal btn
                 bx[i].setFont(bigFont);
                 bx[i].setForeground(Color.red);
             }
