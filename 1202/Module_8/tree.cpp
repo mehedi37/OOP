@@ -41,7 +41,8 @@ int main() {
     }
     cout<<endl<<"The Tree is"<<endl;
     for (i=1;i<=n;i++) {
-        cout<<LList[i] ->leftNode<<" "<<char(LList[i]->data)<<" "<<LList[i]->rightNode<<endl;
+        // cout<<LList[i] ->leftNode<<" "<<char(LList[i]->data)<<" "<<LList[i]->rightNode<<endl;
+        cout<<(LList[i] ->leftNode == NULL ? 0 : LList[i] ->leftNode->data)<<"<-"<<LList[i]->data<<"->"<<(LList[i]->rightNode == NULL ? 0 : LList[i]->rightNode->data)<<endl;
     }
 
 }

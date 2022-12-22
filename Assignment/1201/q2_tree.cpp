@@ -1,56 +1,53 @@
-// CPP program to find sum of
-// all leaf nodes of binary tree
 #include<bits/stdc++.h>
+#include<fstream>
 using namespace std;
-
-// struct binary tree node
-struct Node{
-    int data;
-    Node *left, *right;
+struct Node {
+    Node *leftNode;
+    int data{0};
+    Node *rightNode;
 };
 
-// return new node
-Node *newNode(int data){
-    Node *temp = new Node();
-    temp->data = data;
-    temp->left = temp->right = NULL;
-    return temp;
-}
+Node *LList[50];
+Node *h, *p;
 
-// utility function which calculates
-// sum of all leaf nodes
-void leafSum(Node *root, int& sum){
-    if (!root)
-        return;
+int main() {
+    ifstream file;
+    int leftNode[50];
+    int data[50];
+    int rightNode[50];
+    file.open("array.txt");
+    int i=1, n;
 
-    // add root data to sum if
-    // root is a leaf node
-    if (!root->left && !root->right)
-        sum += root->data;
+    // Getting input from "text" file
+    while (file >> leftNode[i]) {
+        file>>data[i];
+        file>>rightNode[i];
+        i++;
+    }
+    n=i-1;
+// Tree node create kora holo
+    for(i=1;i<=n;i++)
+        LList[i]=new Node();
 
-    // propagate recursively in left
-    // and right subtree
-    leafSum(root->left, sum);
-    leafSum(root->right, sum);
-}
+//  Head er parent null করে নিলাম
+    LList[0]=0;
+    h=LList[1];
+    for(i=1;i<=n;i++){
+        LList[i]->data=data[i];
+        LList[i]->leftNode=LList[leftNode[i]];
+        LList[i]->rightNode=LList[rightNode[i]];
+    }
 
-// driver program
-int main(){
-
-    //construct binary tree
-    Node *root = newNode(2);
-    root->left = newNode(7);
-    root->left->left = newNode(2);
-    root->left->right = newNode(6);
-    root->left->right->right = newNode(11);
-    root->left->right->left = newNode(5);
-    root->right = newNode(5);
-    root->right->right = newNode(9);
-    root->right->right->left = newNode(4);
-
-    // variable to store sum of leaf nodes
-    int sum = 0;
-    leafSum(root, sum);
-    cout << "Result: " << sum << endl;
-    return 0;
+    // বামে আর ডানে কোনো নোড এড্ড্রেস না থাকলে ওটাই লিফ নোড, এই নোড এর value গুলোরই sum বের করতে হবে
+    int sum{0};
+    for (i=1; i <= n; i++) {
+        if (LList[i]->leftNode == NULL && LList[i]->rightNode == NULL) {
+            sum += LList[i]->data;
+        }
+    }
+    cout<<endl<<"The Tree is"<<endl;
+    for (i=1;i<=n;i++) {
+        cout<<(LList[i] ->leftNode == NULL ? 0 : LList[i] ->leftNode->data)<<"<-"<<LList[i]->data<<"->"<<(LList[i]->rightNode == NULL ? 0 : LList[i]->rightNode->data)<<endl;
+    }
+    cout << "\n\nLeaf Node sum is : " << sum << endl;
 }
