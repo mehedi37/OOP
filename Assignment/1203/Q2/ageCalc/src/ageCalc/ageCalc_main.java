@@ -93,6 +93,8 @@ public class ageCalc_main  {
         // Press enter to submit
         appFrame.getRootPane().setDefaultButton(appButton);
 
+
+        // appButton.addActionListener(this);
         appButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,9 +108,9 @@ public class ageCalc_main  {
                 Period period = Period.between(dob, curDate);
 
                 OutputText.setText(String.valueOf(period.getYears()) + " years, " + String.valueOf(period.getMonths()) + " months and " + String.valueOf(period.getDays()) + " Days");
+                // OutputLabel.setText("MeEk_0");
             }
         });
-
     }
 
 

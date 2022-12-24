@@ -1,161 +1,156 @@
-#include<iostream>
-#include<queue>
+// Binary Search Tree operations in C++
+
+#include <iostream>
 using namespace std;
-struct Node{
-    int data;
-    struct Node* left;
-    struct Node* right;
+
+struct node {
+  int key;
+  struct node *left, *right;
 };
-Node* newNode(int val) {
-    Node *temp = new Node();
-    temp->data = val;
-    temp->right = NULL;
-    temp->left = NULL;
-    return temp;
-}
-Node* insert(Node* root, int val) {
-    if(root == NULL) {
-        root = newNode(val);
-    }
-    else if(val < root->data)
-        root->left = insert(root->left,val);
-    else
-        root->right = insert(root->right,val);
-    return root;
-}
-void display(Node* root) {
-    //cout << "Displaying the tree elements\n";
-    if(root!=NULL) {
-        display(root->left);
-        cout << root->data << " -> ";
-        display(root->right);
-    }
-}
-Node* findMaximum(Node * node) {
-    if(node == NULL)
-        return node;
-    if(node->right == NULL) {
-            return node;
-    }
-    else
-        return findMaximum(node->right);
-}
-Node* findMinimum(Node * node) {
-    if(node == NULL)
-        return node;
-    if(node->left == NULL) {
-            return node;
-    }
-    else
-        return findMinimum(node->left);
-}
-void preorder(Node* node) {
-    if(node != NULL) {
-        cout << node->data << " ";
-        preorder(node->left);
-        preorder(node->right);
-    }
-}
-void postorder(Node* node) {
-    if(node!=NULL) {
-        postorder(node->left);
-        postorder(node->right);
-        cout << node->data << " ";
-    }
-}
-void inorder(Node* node) {
-    if(node!=NULL) {
-        postorder(node->left);
-        cout << node->data << " ";
-        postorder(node->right);
-    }
+
+// Create a node
+struct node *newNode(int item) {
+  struct node *temp = (struct node *)malloc(sizeof(struct node));
+  temp->key = item;
+  temp->left = temp->right = NULL;
+  return temp;
 }
 
-void levelorder(Node* node) {
-    if(node == NULL)
+// Inorder Traversal
+void inorder(struct node *root) {
+  if (root != NULL) {
+    // Traverse left
+    inorder(root->left);
+
+    // Traverse root
+    cout << root->key << " -> ";
+
+    // Traverse right
+    inorder(root->right);
+  }
+}
+
+// Insert a node
+struct node *insert(struct node *node, int key) {
+  // Return a new node if the tree is empty
+  if (node == NULL) return newNode(key);
+
+  // Traverse to the right place and insert the node
+  if (key < node->key)
+    node->left = insert(node->left, key);
+  else
+    node->right = insert(node->right, key);
+
+  return node;
+}
+
+// Find the inorder successor
+struct node *minValueNode(struct node *node) {
+  struct node *current = node;
+
+  // Find the leftmost leaf
+  while (current && current->left != NULL)
+    current = current->left;
+
+  return current;
+}
+
+// Search a node
+
+bool found = 0;
+
+void search(struct node *root, int key) {
+    found = 0;
+    if (root != NULL) {
+    // Traverse left
+    search(root->left, key);
+
+    // Traverse root
+    if (root->key == key) {
+        cout << "Found\n";
+        found = 1;
         return;
-    queue<Node*> myqueue;
-    myqueue.push(node);
-    while(!myqueue.empty()) {
-        Node* frontNode = myqueue.front();
-        cout << frontNode->data << " ->";
-        if(frontNode->left != NULL)
-            myqueue.push(frontNode->left);
-        if(frontNode->right != NULL)
-            myqueue.push(frontNode->right);
-        myqueue.pop();
     }
-}
-bool search (Node* root,int item) {
-    if(root==NULL) {
-        return false;
-    }
-    if(item == root->data) {
-        return true;
-    }
-    else if(item < root->data) {
-        search(root->left,item);
-    }
-    else if(item > root->data) {
-        search(root->right,item);
-    }
-    else {
-        return false;
-    }
+
+    // Traverse right
+    search(root->right, key);
+  }
+//   cout << "Not found\n";
 }
 
-int findHeight(Node *node) {
-    if(node == NULL) {
-        return -1;
+
+// Deleting a node
+struct node *deleteNode(struct node *root, int key) {
+  // Return if the tree is empty
+  if (root == NULL) return root;
+
+  // Find the node to be deleted
+  if (key < root->key)
+    root->left = deleteNode(root->left, key);
+  else if (key > root->key)
+    root->right = deleteNode(root->right, key);
+  else {
+    // If the node is with only one child or no child
+    if (root->left == NULL) {
+      struct node *temp = root->right;
+      free(root);
+      return temp;
+    } else if (root->right == NULL) {
+      struct node *temp = root->left;
+      free(root);
+      return temp;
     }
-    else{
-        int leftheight = findHeight(node->left);
-        int rightheight = findHeight(node->right);
-        return max(leftheight,rightheight) + 1;
-    }
+
+    // If the node has two children
+    struct node *temp = minValueNode(root->right);
+
+    // Place the inorder successor in position of the node to be deleted
+    root->key = temp->key;
+
+    // Delete the inorder successor
+    root->right = deleteNode(root->right, temp->key);
+  }
+  return root;
 }
+
 int main() {
-    cout << "Enter the  no of elements\n";
-    int n,item;
-    Node *root = NULL;
-    cin >> n;
-    cout << "Enter the datas to insert\n";
-    for(int i=0;i<n;i++) {
-        cin >> item;
-        root = insert(root,item); //store the returned valued into the root itself everytime necessary
-    }
+    node *root = NULL;
+    while (1) {
+        int choose;
+        cout << "\n1) Insert\n";
+        cout << "2) Search\n";
+        cout << "3) Delete\n";
+        cout << "4) Display\n";
+        cout << "5) Exit\n";
+        cout << "Enter an option : \n";
+        cin >> choose;
 
-    cout << "Tree formed\n";
-    display(root);
-
-    cout << "\nFinding the minimum and maximul v << alue in the tree\n";
-    Node *min = findMinimum(root);
-    Node *max = findMaximum(root);
-    if(min == NULL )
-        cout << "Tree is empty\n";
-    else{
-        cout << "Maximum element is : " << max->data << " \n";
-        cout << "Minimum element is : " << min->data << " \n";
+        int val;
+        switch(choose) {
+            case 1:
+                cout << "Enter number to insert : ";
+                val; cin >> val;
+                root = insert(root, val);
+                break;
+            case 2:
+                cout << "Search value : ";
+                val; cin >> val;
+                search(root, val);
+                if (!found) cout << "Not Found\n";
+                break;
+            case 3:
+                cout << "Delete value : ";
+                val; cin >> val;
+                root = deleteNode(root, val);
+                break;
+            case 4:
+                inorder(root);
+                break;
+        }
+        if (choose == 5) {
+            cout << "Exiting Program\n";
+            break;
+        }
     }
-    cout << "Finding the height of the binary tree\n";
-    cout << "Height of the tree: " << findHeight(root);
-    cout << "\nPreorder traversal: ";
-    preorder(root);
-    cout << "\nPostOrder traversal: ";
-    postorder(root);
-    cout << "\nInorder traversal: ";
-    inorder(root);
-    cout << "\nLevel Order traversal: ";
-    levelorder(root);
-    //Searching any element in the tree..
-    cout << "\nEnter the  item to find (Enter -1 to exit searching)\n";
-    do{
-        cin >> item;
-        if(search(root,item))
-            cout << "Found..\n";
-        else
-            cout << "Not Found!\n";
-    }
-    while(item!=-1);
     return 0;
 }
