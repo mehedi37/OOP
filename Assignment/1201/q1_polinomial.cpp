@@ -1,7 +1,9 @@
+// Roll - 2003037
+// Assignment 1201, topic 1, polynomial
+
 #include <bits/stdc++.h>
 using namespace std;
 
-// Represents the single polynomial
 class Node {
  public:
     int x;
@@ -16,7 +18,6 @@ class Node {
 };
 
 
-// Simply Prints the List to the Screen
 void printList(Node *head){
     head =  head->next;
     Node * tmp = head;
@@ -29,9 +30,6 @@ void printList(Node *head){
   cout << "\n\n";
 }
 
-
-// Creates a new node and inserts it into the end
-// of the head node
 void insertNode(Node *head, int x, int pwr){
     Node *newNode = new Node(x, pwr, NULL);
     while(head->next != NULL){
@@ -40,56 +38,29 @@ void insertNode(Node *head, int x, int pwr){
     head->next = newNode;
 }
 
-
-// Function to add both list.
 void add(Node *first, Node *second){
-    // Resultant list
     Node *result = NULL;
-
-    // Loop to add both the list
-    // until one of the list reaches to its end
     while (first && second) {
-        // saves current result
         int x, pwr;
-
-        // if power of both the polynomial is same
-        // we simply add their coefficient and increment the
-        // pointer to next node
         if(first->pwr == second->pwr) {
             x = first->x+second->x;
             pwr = first->pwr;
             first = first->next;
             second = second->next;
         }
-
-        // if power of first polynomial is greater than
-        // the second one then save its coefficient and power
-        // into the result and increment its pointer
         else if (first->pwr > second->pwr) {
             x = first->x;
             pwr = first->pwr;
             first = first->next;
         }
-
-        // if power of second polynomial is greater than
-        // the first one. then save its coefficient and power
-        // into the result and increment its pointer
         else {
             x = second->x;
             pwr = second->pwr;
             second = second->next;
         }
-
-        // if resultant list is empty we create a new node
-        // else we simply add the value at the end of our resultant list
         if(result == NULL) result = new Node(x, pwr, NULL);
         else insertNode(result, x, pwr);
    }
-
-   // After completion of the above loop there might be a possibility
-   // that one of the two polynomial lists have some unchecked data
-   // below two loops are just adding the remaining data into our
-   // resultant list
    while(first){
         if(result == NULL) result = new Node(first->x, first->pwr, NULL);
         else insertNode(result, first->x, first->pwr);
@@ -101,9 +72,6 @@ void add(Node *first, Node *second){
         else insertNode(result, second->x, second->pwr);
         second = second->next;
    }
-
-
-    // printing the resultant list
    printList(result);
 }
 

@@ -1,10 +1,12 @@
+// Roll - 2003037
+// Lab Final on DSA
+
 #include<bits/stdc++.h>
 using namespace std;
-// _mehedi
 
-
-
-#define SIZE 100
+// Set the size of the array
+// For understanding BST it kept low
+#define SIZE 5
 
 class Queue {
  private:
@@ -93,7 +95,7 @@ void inorder(struct node *root) {
     inorder(root->left);
 
     // Traverse root
-    cout << root->key << " -> ";
+    cout << root->left << "<- " << root->key << " ->" << root->right << endl;
 
     // Traverse right
     inorder(root->right);
@@ -117,7 +119,7 @@ struct node *insert(struct node *node, int key) {
 
 class arrayClass {
  private:
-    int ax_mehedi[100];
+    int ax_mehedi[SIZE];
     stack<int> s_mehedi;
     Queue q_mehedi;
     // bst root
@@ -126,7 +128,7 @@ class arrayClass {
 
  public:
     void create() {
-        for (int i_mehedi{0}; i_mehedi < 101; i_mehedi++) {
+        for (int i_mehedi{0}; i_mehedi < SIZE; i_mehedi++) {
             // cin >> ax_mehedi[i_mehedi];
             ax_mehedi[i_mehedi] = i_mehedi+1;
         }
@@ -138,7 +140,7 @@ class arrayClass {
     }
 
     void transferOdd() {
-        int x_mehedi{100};
+        int x_mehedi{SIZE};
         while (x_mehedi--) {
             if (s_mehedi.top() & 1) {
                 q_mehedi.enQueue(s_mehedi.top());
@@ -161,7 +163,7 @@ class arrayClass {
     }
     void DisplayStack() {
         cout << "\nStack Display\n";
-        for (int i_mehedi{99}; i_mehedi >= 0; i_mehedi--) {
+        for (int i_mehedi{SIZE-1}; i_mehedi >= 0; i_mehedi--) {
             cout << ax_mehedi[i_mehedi] << " ";
         }
         cout << endl;
